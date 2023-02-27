@@ -1,8 +1,9 @@
 package com.mostafa.bddexample.cucumber.steps
 
-import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.mostafa.bddexample.LoginActivity
 import com.mostafa.bddexample.cucumber.espresso.login.LoginScreenRobot
+import com.mostafa.bddexample.utils.ActivityFinisher
+import cucumber.api.java.After
+import cucumber.api.java.Before
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
@@ -10,6 +11,17 @@ import cucumber.api.java.en.When
 
 class LoginDetailsSteps {
     val robot = LoginScreenRobot()
+//    private val activityRule = ActivityTestRule(LoginActivity::class.java, false, false)
+
+    @Before
+    fun setup() {
+        //not needed now, but you may needed to setup mock responses before your screen starts
+    }
+
+    @After
+    fun tearDown() {
+        ActivityFinisher.finishOpenActivities() // Required for test scenarios with multiple activities or scenarios with more cases
+    }
 
     @Given("^I start the application$")
     fun i_start_app(){

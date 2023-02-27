@@ -7,7 +7,6 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mostafa.bddexample.LoginActivity
 import com.mostafa.bddexample.R
@@ -31,7 +30,7 @@ class LoginScreenRobot {
     }
 
     fun enterPassword(Password: String) {
-        onView(withId(R.id.email)).perform(typeText(Password))
+        onView(withId(R.id.password)).perform(typeText(Password))
     }
 
     fun closeKeyboard() {
