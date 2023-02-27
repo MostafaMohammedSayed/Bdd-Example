@@ -1,4 +1,5 @@
 Feature: Enter login details
+
   @smoke
     @e2e
   Scenario Outline: Successful login
@@ -12,6 +13,6 @@ Feature: Enter login details
     And I click sign in button
     Then I expect to see successful login message
     Examples:
-      | email        | password |
-      | somelonmgemail@mail.com | 12345678   |
-      | test@gmail.com | somePassWithVeryLongValue   |
+      | email                   | password                  |
+      | somelonmgemail@mail.com | 12345678                  |
+      | test@gmail.com          | somePassWithVeryLongValue |

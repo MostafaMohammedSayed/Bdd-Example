@@ -13,4 +13,5 @@
         completions."
     </string>
     <string name="successful_login">Successful Login</string>
+    <string name="dummy">dummy</string>
 </resources>

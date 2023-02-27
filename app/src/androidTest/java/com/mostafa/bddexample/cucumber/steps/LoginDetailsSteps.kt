@@ -10,7 +10,7 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
 class LoginDetailsSteps {
-    val robot = LoginScreenRobot()
+    private val robot = LoginScreenRobot()
 //    private val activityRule = ActivityTestRule(LoginActivity::class.java, false, false)
 
     @Before

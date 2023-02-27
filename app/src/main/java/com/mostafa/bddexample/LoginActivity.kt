@@ -1,28 +1,23 @@
 package com.mostafa.bddexample
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.mostafa.bddexample.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var password: EditText
-    private lateinit var email: EditText
-    private lateinit var email_sign_in_button: Button
-    private lateinit var successful_login_text_view: TextView
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        password = findViewById(R.id.password)
-        email = findViewById(R.id.email)
-        email_sign_in_button = findViewById(R.id.email_sign_in_button)
-        successful_login_text_view = findViewById(R.id.successful_login_text_view)
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        binding.password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
@@ -30,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
             false
         })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        binding.emailSignInButton.setOnClickListener { attemptLogin() }
     }
 
     /**
@@ -40,31 +35,31 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun attemptLogin() {
         // Reset errors.
-        email.error = null
-        password.error = null
+        binding.email.error = null
+        binding.password.error = null
 
         // Store values at the time of the login attempt.
-        val emailStr = email.text.toString()
-        val passwordStr = password.text.toString()
+        val emailStr = binding.email.text.toString()
+        val passwordStr = binding.password.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            password.error = getString(R.string.error_invalid_password)
-            focusView = password
+            binding.password.error = getString(R.string.error_invalid_password)
+            focusView = binding.password
             cancel = true
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(emailStr)) {
-            email.error = getString(R.string.error_field_required)
-            focusView = email
+            binding.email.error = getString(R.string.error_field_required)
+            focusView = binding.email
             cancel = true
         } else if (!isEmailValid(emailStr)) {
-            email.error = getString(R.string.error_invalid_email)
-            focusView = email
+            binding.email.error = getString(R.string.error_invalid_email)
+            focusView = binding.email
             cancel = true
         }
 
@@ -73,8 +68,12 @@ class LoginActivity : AppCompatActivity() {
             // form field with an error.
             focusView?.requestFocus()
         } else {
-            successful_login_text_view.visibility = View.VISIBLE
+            binding.successfulLoginTextView.visibility = View.VISIBLE
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
         }
+        binding.invalidateAll()
     }
 
     private fun isEmailValid(email: String): Boolean {

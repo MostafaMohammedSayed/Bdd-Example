@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
 android {
     namespace 'com.mostafa.bddexample'
     compileSdkVersion 33
@@ -33,6 +35,9 @@ android {
         resources {
             excludes += ['META-INF/com.android.tools/proguard/coroutines.pro']
         }
+    }
+    buildFeatures{
+        dataBinding true
     }
 }
 
