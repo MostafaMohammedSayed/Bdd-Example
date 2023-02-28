@@ -4,11 +4,13 @@ apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.mostafa.bddexample'
-    compileSdkVersion 33
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdk"]
     defaultConfig {
         applicationId "com.mostafa.bddexample"
-        minSdkVersion 21
-        targetSdkVersion 33
+        minSdkVersion globalConfiguration["androidMinSdk"]
+        targetSdkVersion globalConfiguration["androidTargetSdk"]
         versionCode 2
         versionName "1.1"
         testInstrumentationRunner getInstrumentation()
@@ -54,15 +56,16 @@ def getTestScenario() {
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
-    androidTestImplementation 'info.cukes:cucumber-android:1.2.6'
-    androidTestImplementation 'info.cukes:cucumber-picocontainer:1.2.6'
+    def ext = rootProject.extensions.getByName("ext")
+    def deps = ext["supportDependencies"]
+    implementation deps["coreKtx"]
+    implementation deps["appCompat"]
+    implementation deps["material"]
+    implementation deps["constraintLayout"]
+    testImplementation deps["junit"]
+    androidTestImplementation deps["androidxJunit"]
+    androidTestImplementation deps["espresso"]
+    androidTestImplementation deps["espresso_intents"]
+    androidTestImplementation deps["cucumber_android"]
+    androidTestImplementation deps["cucumber_picocontainer"]
 }
