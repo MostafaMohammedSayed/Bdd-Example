@@ -28,11 +28,6 @@ class LoginActivity : AppCompatActivity() {
         binding.emailSignInButton.setOnClickListener { attemptLogin() }
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private fun attemptLogin() {
         // Reset errors.
         binding.email.error = null
@@ -77,12 +72,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isEmailValid(email: String): Boolean {
-        //TODO: Replace this with your own logic
         return email.contains("@")
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        //TODO: Replace this with your own logic
         return password.length > 6
     }
 }
